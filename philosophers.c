@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 14:01:20 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/04 20:53:43 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:54:36 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,51 @@
 
 void	to_do(void)
 {
+	printf("the philo is here\n")
 }
 
-// void	do_think(t_philo *ph)
 
-void	creat_philo(pthread_t **ph, int philos)
+t_philo	*ft_allocate(int philos)
 {
-	int	i;
+	int		i;
+	t_philo	*ptr;
 
 	i = 0;
 	while (i < philos)
 	{
-		(*ph)[i] = pthread_create(&(*ph)[i], NULL, &to_do, NULL);
-		usleep(1);
-		pthread_join((*ph)[i], NULL);
+		ft_lstadd_back(&ptr, ft_lstnew(i));
+		i++;
+	}
+	return (ptr);
+}
+
+void	creat_philo(t_philo **philo, int n_p)
+{
+	int	i;
+
+	i = 0;
+	while (i < n_p)
+	{
+		(*philo) = pthread_create(&(*philo)->philos, NULL, &to_do, NULL);
+		pthread_join((*philo)->philos, NULL);
 		i++;
 	}
 }
 
-// void	do_think(int p_id, )
-// {
-// }
 
 int	main(int c, char **v)
 {
 	int			i;
 	int			num_philos;
 	pthread_t	*philos;
+	t_philo		*ph;
 
 	i = 0;
 	num_philos = ft_atoi(v[1]);
+	ph = malloc(sizeof(t_philo));
+	if (!ph)
+		return (1);
 	philos = malloc(sizeof(pthread_t) * num_philos + 1);
 	creat_philo(&philos, num_philos);
-	while (1)
-	{
-		printf("%d %d is took a fork\n", )
-	}
 	return (0);
 }

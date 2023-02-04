@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:59:46 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/04 18:17:09 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:48:11 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ typedef struct l_philo
 	int				p_id;
 	int				l_or_r;
 	pthread_t		*philos;
+	pthread_mutex_t	ph;
 	struct l_philo	*next;
+	struct l_philo	*head;
 }				t_philo;
 
 // utils functions
