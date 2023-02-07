@@ -1,7 +1,6 @@
 NAME = philosophers
 
 SRC = philosophers.c \
-		utils_lists.c \
 		utils_file.c \
 
 # SRC_B = checker_bonus.c \
