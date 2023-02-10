@@ -6,73 +6,97 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 14:01:20 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/07 16:10:35 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/09 22:09:43 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-pthread_mutex_t	nut;
 
-void	*to_think(int *id)
+int	do_eat(t_data *pack)
 {
-	//int	*f;
-
-//	f = id;
-	printf("%d is thinking\n", *id);
-	return (0);
+	printf("%d picked up a fork\n", pack->i++);
+	// printf("%d is eating\n", pack->i);
+	// usleep(60000);
+	return (SUCCESS);
 }
 
-void	create_phs(int phs)
+// int	to_do(void *p)
+// {
+// 	t_data	*pack;
+
+// 	pack = (t_data *)p;
+// 	pack->i = 0;
+// 	while (1)
+// 	{
+// 		pthread_mutex_lock(&pack->forks[pack->i]);
+// 		if (pack->i > pack->phs_c)
+// 			pack->i = 0;
+// 		do_eat(pack);
+// 		pack->i++;
+// 		pthread_mutex_unlock(pack->forks);
+// 		do_sleep(pack);
+// 		do_think(pack);
+// 	}
+// 	return (0);
+// }
+
+int	do_philo(t_data *pack)
 {
 	int	i;
 
 	i = 0;
-	pthread_t *philo;
-	philo = malloc(sizeof(pthread_t)*phs);
-	while (i < phs)
+	while (i < pack->phs_c)
 	{
-		pthread_create(&philo[i], NULL, (void *)to_think, (void *)&i);
+		pthread_mutex_init(&pack->forks[i], NULL);
+		i++;
+	}
+	i = 0;
+	while (i < pack->phs_c)
+	{
+		pthread_create(&pack->phs[i], NULL, (void *)do_eat, (void *)pack);
 		usleep(50);
 		i++;
 	}
 	i = 0;
-	while (i < phs)
+	while (i < pack->phs_c)
 	{
-		pthread_join(philo[i], NULL);
+		pthread_join(pack->phs[i], NULL);
 		i++;
 	}
+	return (0);
 }
 
-int	*init_resources(int num)
+void	init_resources(t_data **pack, char **v)
 {
 	int	i;
-	int	*chops;
 
-	chops = malloc(sizeof(int) * num);
-	if (!chops)
-		return (NULL);
 	i = 0;
-	while (i < num)
-	{
-		chops[i] = i;
-		i++;
-	}
-	return (chops);
+	(*pack)->phs_c = ft_atoi(v[0]);
+	(*pack)->forks = malloc(sizeof(pthread_mutex_t)
+			* (*pack)->phs_c);
+	(*pack)->t_t_die = ft_atoi(v[1]);
+	(*pack)->t_t_eat = ft_atoi(v[2]);
+	(*pack)->t_t_sleep = ft_atoi(v[3]);
+	(*pack)->phs = malloc(sizeof(pthread_t) * (*pack)->phs_c);
+	(*pack)->forks = malloc(sizeof(pthread_mutex_t) * (*pack)->phs_c);
+	if (!(*pack)->phs || !(*pack)->forks)
+		return ;
 }
 
 int	main(int c, char **v)
 {
-	pthread_mutex_t	f;
-	int				*chopsticks;
-	int				i;
-	int				num_philos;
-	pthread_t		*phs;
+	int		i;
+	t_data	*pack;
 
 	i = 0;
-	pthread_mutex_init(&nut, NULL);
-	num_philos = ft_atoi(v[1]);
-	create_phs(num_philos);
-	printf("hello 2\n");
+	if (c != 5)
+		return (printf("error in passing arguments\n"), 1);
+	pack = malloc(sizeof(t_data));
+	if (!pack)
+		return (1);
+	init_resources(&pack, v + 1);
+	if (do_philo(pack))
+		return (1);
 	return (0);
 }
