@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 14:01:20 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/09 22:09:43 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:19:33 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,48 @@
 
 int	do_eat(t_data *pack)
 {
-	printf("%d picked up a fork\n", pack->i++);
-	// printf("%d is eating\n", pack->i);
-	// usleep(60000);
+	printf("%d picked up a fork\n", pack->i);
+	printf("%d is eating\n", pack->i++);
+	usleep(60000);
+
 	return (SUCCESS);
 }
 
-// int	to_do(void *p)
-// {
-// 	t_data	*pack;
+long long	from_micro_to_milli(long long number)
+{
+	long long	i;
 
-// 	pack = (t_data *)p;
-// 	pack->i = 0;
-// 	while (1)
-// 	{
-// 		pthread_mutex_lock(&pack->forks[pack->i]);
-// 		if (pack->i > pack->phs_c)
-// 			pack->i = 0;
-// 		do_eat(pack);
-// 		pack->i++;
-// 		pthread_mutex_unlock(pack->forks);
-// 		do_sleep(pack);
-// 		do_think(pack);
-// 	}
-// 	return (0);
-// }
+	i = number / 1000;
+	return (i);
+}
+
+int	do_sleep(t_data *pack)
+{
+	printf("%d is sleeping\n", pack->i);
+	return (SUCCESS);
+}
+
+int	to_do(void *p)
+{
+	t_data	*pack;
+
+	pack = (t_data *)p;
+	pack->i = 0;
+	while (1)
+	{
+		pthread_mutex_lock(&pack->forks[pack->i]);
+		if (pack->i > pack->phs_c)
+			pack->i = 0;
+		do_eat(pack);
+		usleep(500);
+		pack->i++;
+		pthread_mutex_unlock(&pack->forks[pack->i]);
+		do_sleep(pack);
+		// do_think(pack);
+	}
+	return (0);
+}
+
 
 int	do_philo(t_data *pack)
 {
@@ -54,7 +71,7 @@ int	do_philo(t_data *pack)
 	i = 0;
 	while (i < pack->phs_c)
 	{
-		pthread_create(&pack->phs[i], NULL, (void *)do_eat, (void *)pack);
+		pthread_create(&pack->phs[i], NULL, (void *)to_do, (void *)pack);
 		usleep(50);
 		i++;
 	}

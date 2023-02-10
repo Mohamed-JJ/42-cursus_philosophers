@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:52:40 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/09 13:53:10 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:06:15 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	do_think(t_data *pack)
 	printf("%d is thinking\n", (pack->i % 2));
 }
 
-void	do_sleep(t_data *pack)
-{
-	printf("%d is sleeping\n", pack->i);
-}
+// void	do_sleep(t_data *pack)
+// {
+// 	printf("%d is sleeping\n", pack->i);
+// }
