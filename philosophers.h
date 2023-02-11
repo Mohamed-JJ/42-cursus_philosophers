@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:59:46 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/09 21:13:52 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:33:32 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct l_data
 // conversion functions
 
 int		ft_atoi(char *str);
+long long	from_micro_to_milli(long long number);
 
 // time conversion functions (milisecond to microsecond)
 

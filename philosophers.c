@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 14:01:20 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/10 17:19:33 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:33:25 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 int	do_eat(t_data *pack)
 {
 	printf("%d picked up a fork\n", pack->i);
-	printf("%d is eating\n", pack->i++);
+	printf("%d is eating\n", pack->i);
+	// pack->i++;
 	usleep(60000);
-
 	return (SUCCESS);
 }
 
@@ -45,14 +45,13 @@ int	to_do(void *p)
 	while (1)
 	{
 		pthread_mutex_lock(&pack->forks[pack->i]);
-		if (pack->i > pack->phs_c)
+		if (pack->i > pack->phs_c - 1)
 			pack->i = 0;
 		do_eat(pack);
 		usleep(500);
 		pack->i++;
 		pthread_mutex_unlock(&pack->forks[pack->i]);
 		do_sleep(pack);
-		// do_think(pack);
 	}
 	return (0);
 }
