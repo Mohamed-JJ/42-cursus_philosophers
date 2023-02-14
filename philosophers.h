@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:59:46 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/11 15:33:32 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:17:48 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,30 @@
 # include <pthread.h>
 # include <time.h>
 
-#define SUCCESS 0
+# define SUCCESS 0
+# define FAILURE 1
 
 typedef struct l_data
 {
-	int				i;
-	int				j;
 	int				t_t_eat;
+	int				t_t_die;
 	int				t_t_sleep;
 	int				t_t_think;
-	int				t_t_die;
 	int				e_t;
+}				t_data;
+
+typedef struct l_philo
+{
+	int				t_e;
+	int				id;
 	int				phs_c;
-	pthread_t		*phs;
-	pthread_mutex_t	*forks;
-}			t_data;
+	pthread_mutex_t	chops;
+	pthread_mutex_t	print;
+	pthread_t		phs;
+	struct l_philo	*next;
+	struct l_philo	*head;
+	t_data			*d;
+}				t_philo;
 
 // utils functions
 
@@ -41,7 +50,7 @@ typedef struct l_data
 
 // conversion functions
 
-int		ft_atoi(char *str);
+int			ft_atoi(char *str);
 long long	from_micro_to_milli(long long number);
 
 // time conversion functions (milisecond to microsecond)
