@@ -2,6 +2,7 @@ NAME = philosophers
 
 SRC = philosophers.c \
 		utils_file.c \
+		lists.c \
 
 OBJ = $(SRC:.c=.o)
 
