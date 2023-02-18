@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:08:34 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/17 22:50:28 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/18 19:46:44 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	bucket_list(t_philo *p)
 		usleep(15000);
 	while (p)
 	{
-		to_do(p, &time); //make sure to add a timer to ypur function
+		to_do(p, time);
 	}
 }
 

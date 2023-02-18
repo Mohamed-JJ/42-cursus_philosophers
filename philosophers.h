@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:59:46 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/17 22:50:59 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/18 19:48:49 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,19 @@
 typedef struct l_philo
 {
 	int				phs_c;
-	int				t_t_eat;//  an indicator for when the phs should eat
-	int				t_t_die;// an indicator for when the phs should die
-	int				t_t_sleep;// an indicator for when the phs should sleep or rather say for how long he should be asleep for
-	// int				t_t_think;// an indicator for when the phs should think or rather say for how long he should be think for
-	int				e_t;// the fifth argument which tells us how many times all the phs should eat before the program terminates
-	int				t_e;// a counter which counts how many times every phs ate
-	int				id;// the id of each phs
+	int				t_t_eat;
+	int				t_t_die;
+	int				t_t_sleep;
+	int				e_t;
+	int				t_e;
+	int				id;
 	long long		last_meal;
 	pthread_mutex_t	chops;
 	pthread_mutex_t	print;
 	pthread_t		phs;
 	struct l_philo	*next;
 	struct l_philo	*head;
-}				t_philo; 
+}				t_philo;
 
 // utils functions
 
@@ -71,6 +70,6 @@ int	from_micro_to_milli(void);
 void		bucket_list(t_philo *p);
 void		do_sleep(t_philo *p, int *time);
 void		do_think(t_philo *p, int *time);
-void		to_do(t_philo *p, int *timer);
+void		to_do(t_philo *p, int timer);
 
 #endif
