@@ -1,8 +1,9 @@
 NAME = philosophers
 
 SRC = philosophers.c \
-		utils_file.c \
+		utils.c \
 		lists.c \
+		to_do.c \
 
 OBJ = $(SRC:.c=.o)
 
