@@ -6,39 +6,40 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 14:01:20 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/18 21:26:39 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/19 16:24:39 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	my_usleep(t_philo *p)
+void	my_usleep(int time)
 {
 	int	i;
 
-	i = p->t_t_eat * 1000;
-	// printf("%d", i);
-	// exit(0);
+	i = time * 1000;
 	usleep(i);
 }
 
-int	time_setter(int timer)
+long long	time_setter(void)
 {
 	long long		i;
 	struct timeval	ml;
 
 	gettimeofday(&ml, NULL);
 	i = (ml.tv_sec * 1000) + (ml.tv_usec / 1000);
+	return (i);
 }
 
-void	to_do(t_philo *p, int x)
+
+
+void	to_do(t_philo *p, long long x)
 {
 	pthread_mutex_lock(&p->chops);
-	printf("%d %d has taken a fork\n", x, p->id);
+	put_out_info("has taken a fork\n", x, p->id);
 	pthread_mutex_lock(&p->next->chops);
-	printf("%d %d has taken a fork\n", x, p->id);
-	printf("%d %d is eating\n", x, p->id);
-	my_usleep(x - time_setter());
+	put_out_info("has taken a fork\n", x, p->id);
+	put_out_info("is eating\n", x, p->id);
+	my_usleep(p->t_t_eat);
 	pthread_mutex_unlock(&p->chops);
 	pthread_mutex_unlock(&p->next->chops);
 	pthread_mutex_lock(&p->print);
@@ -99,4 +100,4 @@ int	main(int c, char **v)
 
 
 /*you ahve to configure timing soo when you can print it out on the terminal*/
-/*ps : try taking a look at gettimeofday*/
+/*ps : try taking a look at gettimeofday*/ 
