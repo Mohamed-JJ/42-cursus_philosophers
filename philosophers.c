@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 14:01:20 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/19 16:24:39 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/19 21:30:59 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,14 @@ void	to_do(t_philo *p, long long x)
 
 void	do_philo(t_philo *p)
 {
+	pthread_mutex_t	h;
+	
+	pthread_mutex_init(&p->print, NULL);
+	h = p->print;
 	while (p)
 	{
 		pthread_mutex_init(&p->chops, NULL);
-		pthread_mutex_init(&p->print, NULL);
+		p->print = h;
 		p = p->next;
 		if (p == p->head)
 			break ;
