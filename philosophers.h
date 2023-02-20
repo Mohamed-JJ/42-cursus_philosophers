@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:59:46 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/19 15:21:32 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:43:01 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 
 typedef struct l_philo
 {
-	int				phs_c;
-	int				t_t_eat;
-	int				t_t_die;
-	int				t_t_sleep;
-	int				e_t;
-	int				t_e;
-	int				id;
+	long long		phs_c;
+	long long		t_t_eat;
+	long long		t_t_die;
+	long long		t_t_sleep;
+	long long		e_t;
+	long long		t_e;
+	long long		id;
 	long long		last_meal;
 	long long		*time_s;
 	pthread_mutex_t	chops;
@@ -64,7 +64,7 @@ void		my_usleep(int time);
 
 // time conversion functions (milisecond to microsecond)
 
-int			from_micro_to_milli(void);
+long long	time_setter(void);
 
 // routine functions
 

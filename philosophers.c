@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 14:01:20 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/02/19 21:30:59 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:42:14 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,7 @@ void	my_usleep(int time)
 	usleep(i);
 }
 
-long long	time_setter(void)
-{
-	long long		i;
-	struct timeval	ml;
 
-	gettimeofday(&ml, NULL);
-	i = (ml.tv_sec * 1000) + (ml.tv_usec / 1000);
-	return (i);
-}
 
 
 
@@ -50,18 +42,44 @@ void	to_do(t_philo *p, long long x)
 	pthread_mutex_unlock(&p->print);
 }
 
-// void	my_usleep(int timer)
-// {
-// 	int	buffering_time;
+void	bucket_list(t_philo *p)
+{
+	long long	time;
 
-// 	buffering_time = timer / 1000;
-// 	usleep(buffering_time);
-// }
+	time = time_setter();
+	p->last_meal = time;
+	if (p->id % 2 == 1)
+		usleep(200);
+	while (p)
+		to_do(p, time);
+}
+
+void	put_out_info(char *str, long long past, int ip)
+{
+	long long	out_put;
+	long long	current;
+
+	current = time_setter();
+	out_put = current - past;
+	printf("%lld %d %s", out_put, ip, str);
+}
+
+void	do_sleep(t_philo *p, long long time)
+{
+	put_out_info("is sleeping\n", time, p->id);
+	my_usleep(p->t_t_sleep);
+	
+}
+
+void	do_think(t_philo *p, long long time)
+{
+	put_out_info("is thinking\n", time, p->id);
+}
 
 void	do_philo(t_philo *p)
 {
 	pthread_mutex_t	h;
-	
+
 	pthread_mutex_init(&p->print, NULL);
 	h = p->print;
 	while (p)
@@ -72,20 +90,13 @@ void	do_philo(t_philo *p)
 		if (p == p->head)
 			break ;
 	}
-	p = p->head;
 	while (p)
 	{
 		pthread_create(&p->phs, NULL, (void *)bucket_list, (void *)p);
-		usleep(50);
+		pthread_join(p->phs, NULL);
 		p = p->next;
 		if (p == p->head)
 			break ;
-	}
-	p = p->head;
-	while (p)
-	{
-		pthread_join(p->phs, NULL);
-		p = p->next;
 	}
 }
 
@@ -101,7 +112,3 @@ int	main(int c, char **v)
 	do_philo(p);
 	return (0);
 }
-
-
-/*you ahve to configure timing soo when you can print it out on the terminal*/
-/*ps : try taking a look at gettimeofday*/ 
